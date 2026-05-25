@@ -1,60 +1,106 @@
 # UI Foundry Image Component Generator
 
-Standalone visual image generator built with Next.js.
+Standalone visual Image generator built with Next.js, React, and TypeScript.
 
-This app is a focused image-building studio for framed images, transformed media, masked compositions, and effect-driven image treatments that can be edited visually and exported as code.
+Responsive image studio for source metadata, object fit/position, aspect ratio, captions, masks, overlays, filters, and accessible media presentation.
+
+This project is packaged as an independent component studio for marketplace sale while following the same UI Foundry product language used by the button generator. It keeps local shared controls, local presets, local export utilities, and no runtime dependency on another component app.
 
 ## Product summary
 
 This generator is designed for:
+- marketing site builders
+- product-card and gallery designers
+- developers who need exportable image presentation systems
 
-- designers building cards, galleries, hero media, and editorial layouts
-- developers who want editable image treatments instead of rebuilding wrappers and masks manually
-- freelancers and agencies preparing polished media presentation for client work
-- buyers who want a self-contained image component studio with export support
+The intended workflow is:
+
+1. choose a preset or start from the default state
+2. edit the component through sectioned controls
+3. inspect the live preview in the shared dark studio canvas
+4. switch to code view when needed
+5. copy or download the generated React output
 
 ## What the product includes
 
-- section-based editing controls
+- standalone Next.js app structure
+- section-based editor shell
+- local shared controls for color, typography, inputs, sliders, switches, sections, and preview/download panels
 - live preview panel
 - code view with copy support
-- file export support
-- searchable preset library
-- generated premium preset catalog with filters, paging, and surprise-me apply
-- structured preset browsing with explicit family, archetype, and size filtering
-- dedicated loading and composition surfaces for decoding, object-position presets, and editorial archetypes
-- undo and redo controls
-- self-contained standalone app structure
+- React-only export path
+- download filename control
+- preview background controls
+- preset application flow with full-state updates
+- accessibility and state-preview guidance where native to the component
+- self-contained package files for independent repo publishing
 
-## Editing coverage
+## Native editing surface
 
-The editor currently includes these control areas:
+The editor is focused on controls that are native to Image and useful in real product work:
+- src, srcSet, sizes, alt, title, loading, decoding, width, and height intent
+- aspect ratio, object-fit, object-position, frame, radius, mask, and crop controls
+- caption, content overlay, blend, vignette, duotone, and editorial media treatments
+- filters, transforms, opacity, border, shadow, and surface styling
+- decorative versus meaningful image accessibility guidance
 
-- Presets
-- Basics
-- Composition
-- Loading
-- Filters
-- Transform
-- Shape
-- Masking
-- Effects
-- Motion
-- Accessibility
+The goal is maximum useful depth without adding unrelated controls that would make the component stop reading as Image.
 
-These sections cover source and layout basics, composition and crop presets, loading strategy, visual filters, transforms, shaping and masking, effects, motion, and accessibility metadata.
+## Preset model
+
+Presets are treated as full editor states, not just color swaps. The suite-wide preset contract is:
+
+- family
+- archetype
+- variant
+- size
+- tags
+- state
+
+Applying a preset should update the complete editable state and reset transient preview state so the preview and export stay aligned.
 
 ## Export workflow
 
-The image preview and code output stay aligned to the same current state so the downloaded result mirrors the editor closely.
+The shipped export contract is React-only. The live preview, visible code, copied code, and downloaded file are expected to come from the same current React payload so users do not see one result and export another.
 
-## Why this product is useful
+## Consistency contract
 
-This is more than an image tag helper. It is a configurable media-presentation tool for product UI, editorial layouts, and marketing surfaces.
+This studio is intentionally structured to be both independently sellable and merge-ready for a future UI Foundry SaaS product:
 
-## Tech
+- no runtime imports from button-component
+- no runtime imports from shared-templates
+- no runtime imports from another component studio
+- common editing tasks use the same local control patterns as the button canon
+- shared state names such as previewResetKey, previewBgMode, previewBgInput, and downloadName are preserved where applicable
+
+## Tech stack
 
 - Next.js
 - React
 - TypeScript
+- Tailwind CSS
+- local component/editor utilities
 
+## Commands
+
+    npm install
+    npm run typecheck
+    npm run lint -- --quiet
+    npm run build
+    npm run dev
+
+## Verification checklist
+
+Before publishing a new version, verify:
+
+- install completes without dependency errors
+- typecheck passes
+- lint has no blocking errors
+- production build completes
+- preview and generated React code match
+- copied code and downloaded code match the visible code
+- no generated node_modules, .next, or build artifacts are committed
+
+## Repository
+
+This repo is intended to publish as Abid-Al-Hossain/UI_image.
