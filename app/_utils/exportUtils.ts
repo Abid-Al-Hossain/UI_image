@@ -48,12 +48,10 @@ export function buildImageExportPayload(options: ExportOptions) {
 
   // Transform String
   const transforms: string[] = [];
-  const scaleX = state.flipHorizontal
-    ? -parseFloat(state.scaleX)
-    : parseFloat(state.scaleX);
-  const scaleY = state.flipVertical
-    ? -parseFloat(state.scaleY)
-    : parseFloat(state.scaleY);
+  const rawScaleX = parseFloat(state.scaleX);
+  const rawScaleY = state.scaleUnified ? rawScaleX : parseFloat(state.scaleY);
+  const scaleX = state.flipHorizontal ? -rawScaleX : rawScaleX;
+  const scaleY = state.flipVertical ? -rawScaleY : rawScaleY;
   if (scaleX !== 1 || scaleY !== 1)
     transforms.push(`scale(${scaleX}, ${scaleY})`);
   if (state.rotate !== "0") transforms.push(`rotate(${state.rotate}deg)`);

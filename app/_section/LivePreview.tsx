@@ -56,12 +56,10 @@ export default function LivePreview({ state }: LivePreviewProps) {
   const transformString = useMemo(() => {
     const transforms: string[] = [];
 
-    const scaleXVal = state.flipHorizontal
-      ? -parseFloat(state.scaleX)
-      : parseFloat(state.scaleX);
-    const scaleYVal = state.flipVertical
-      ? -parseFloat(state.scaleY)
-      : parseFloat(state.scaleY);
+    const rawScaleX = parseFloat(state.scaleX);
+    const rawScaleY = state.scaleUnified ? rawScaleX : parseFloat(state.scaleY);
+    const scaleXVal = state.flipHorizontal ? -rawScaleX : rawScaleX;
+    const scaleYVal = state.flipVertical ? -rawScaleY : rawScaleY;
 
     // Hover Scale logic
     let hoverScale = 1;
