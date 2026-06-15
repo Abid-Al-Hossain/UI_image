@@ -96,6 +96,12 @@ export default function ImageTransformSection({
           resetValue="1"
         />
 
+        <Switch
+          label="Uniform scale (link X/Y)"
+          checked={state.scaleUnified}
+          onChange={setKey("scaleUnified")}
+        />
+
         <TransformSlider
           label="Rotate"
           value={state.rotate}
@@ -104,6 +110,25 @@ export default function ImageTransformSection({
           max={180}
           unit="°"
         />
+
+        <div className="grid grid-cols-2 gap-4">
+          <TransformSlider
+            label="Translate X"
+            value={state.translateX}
+            onChange={setKey("translateX")}
+            min={-200}
+            max={200}
+            unit="px"
+          />
+          <TransformSlider
+            label="Translate Y"
+            value={state.translateY}
+            onChange={setKey("translateY")}
+            min={-200}
+            max={200}
+            unit="px"
+          />
+        </div>
 
         <div className="grid grid-cols-2 gap-4">
           <TransformSlider
@@ -173,6 +198,37 @@ export default function ImageTransformSection({
           max={180}
           unit="°"
         />
+
+        <TransformSlider
+          label="Rotate Z"
+          value={state.rotateZ}
+          onChange={setKey("rotateZ")}
+          min={-180}
+          max={180}
+          unit="°"
+        />
+      </div>
+
+      {/* Transform Origin */}
+      <div className="space-y-4">
+        <h3
+          className="text-sm font-bold pb-2 border-b"
+          style={{ color: "var(--text)", borderColor: "var(--border)" }}
+        >
+          Transform Origin
+        </h3>
+        <LabeledField label="Origin">
+          <select
+            value={state.transformOrigin}
+            onChange={(e) => setKey("transformOrigin")(e.target.value)}
+            className="w-full rounded-xl border px-3 py-2 text-sm outline-none"
+            style={{ borderColor: "var(--border)", background: "color-mix(in oklab, var(--surface) 70%, transparent)", color: "var(--text)" }}
+          >
+            {["center", "top left", "top center", "top right", "center left", "center right", "bottom left", "bottom center", "bottom right"].map((o) => (
+              <option key={o} value={o}>{o}</option>
+            ))}
+          </select>
+        </LabeledField>
       </div>
     </div>
   );

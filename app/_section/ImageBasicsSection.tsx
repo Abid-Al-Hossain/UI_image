@@ -116,7 +116,7 @@ export default function ImageBasicsSection({
 
       <LabeledField label="Aspect Ratio" hint="">
         <div className="grid grid-cols-4 gap-2">
-          {["1/1", "16/9", "4/3", "3/2", "21/9", "2/3", "9/16", "none"].map(
+          {["1/1", "16/9", "4/3", "3/2", "21/9", "2/3", "9/16", "none", "custom"].map(
             (ratio) => (
               <button
                 key={ratio}
@@ -142,6 +142,12 @@ export default function ImageBasicsSection({
             ),
           )}
         </div>
+        {state.aspectRatio === "custom" && (
+          <div className="grid grid-cols-2 gap-2 mt-2">
+            <Input label="Width" value={state.customAspectWidth} onChange={(v) => setKey("customAspectWidth")(v)} />
+            <Input label="Height" value={state.customAspectHeight} onChange={(v) => setKey("customAspectHeight")(v)} />
+          </div>
+        )}
       </LabeledField>
 
       <LabeledField label="Object Fit" hint="">

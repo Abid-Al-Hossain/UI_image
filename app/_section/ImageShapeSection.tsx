@@ -236,6 +236,22 @@ export default function ImageShapeSection({
               />
             </LabeledField>
 
+            <LabeledField label="Spread">
+              <Slider
+                min={-20}
+                max={50}
+                step={1}
+                value={state.boxShadowSpread}
+                onChange={setKey("boxShadowSpread")}
+              />
+            </LabeledField>
+
+            <Switch
+              label="Inset shadow"
+              checked={state.boxShadowInset}
+              onChange={setKey("boxShadowInset")}
+            />
+
             <ColorControl
               label="Shadow Color"
               value={state.boxShadowColor}
