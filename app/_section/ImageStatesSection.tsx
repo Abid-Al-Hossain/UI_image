@@ -24,15 +24,18 @@ export default function ImageStatesSection({ state, setState }: Props) {
   return (
     <div className="space-y-6">
       <SectionCard title="Accessibility Labels" subtitle="Explicit ARIA beyond role/aria-hidden.">
+      <div className="space-y-4">
         <LabeledField label="Aria Label">
           <Input value={state.ariaLabel} onChange={(e) => setKey("ariaLabel")(e.target.value)} placeholder="Describe the image purpose" />
         </LabeledField>
         <LabeledField label="Aria Described By">
           <Input value={state.ariaDescribedBy} onChange={(e) => setKey("ariaDescribedBy")(e.target.value)} placeholder="element-id" />
         </LabeledField>
-      </SectionCard>
+      </div>
+    </SectionCard>
 
       <SectionCard title="Link" subtitle="Make the image a clickable link.">
+      <div className="space-y-4">
         <LabeledField label="Href">
           <Input value={state.linkHref} onChange={(e) => setKey("linkHref")(e.target.value)} placeholder="https://example.com" />
         </LabeledField>
@@ -46,16 +49,20 @@ export default function ImageStatesSection({ state, setState }: Props) {
         <LabeledField label="Rel">
           <Input value={state.linkRel} onChange={(e) => setKey("linkRel")(e.target.value)} placeholder="noopener noreferrer" />
         </LabeledField>
-      </SectionCard>
+      </div>
+    </SectionCard>
 
       <SectionCard title="Focus Ring" subtitle="Keyboard focus indicator (only applies when a link is set).">
+      <div className="space-y-4">
         <LabeledField label="Enabled">
           <Select value={state.focusRingEnabled ? "true" : "false"} onChange={(v) => setKey("focusRingEnabled")(v === "true")} options={[{ value: "true", label: "Yes" }, { value: "false", label: "No" }]} />
         </LabeledField>
         <ColorControl label="Ring color" value={state.focusRingColor} onChange={setKey("focusRingColor")} />
-      </SectionCard>
+      </div>
+    </SectionCard>
 
       <SectionCard title="Transitions" subtitle="Used for disabled/opacity changes when no hover effect is active.">
+      <div className="space-y-4">
         <LabeledField label="Duration (ms)">
           <Input type="number" value={String(state.transitionDuration)} onChange={(e) => setKey("transitionDuration")(Number(e.target.value) || 0)} />
         </LabeledField>
@@ -70,18 +77,22 @@ export default function ImageStatesSection({ state, setState }: Props) {
             { value: "linear", label: "Linear" },
           ]}
         />
-      </SectionCard>
+      </div>
+    </SectionCard>
 
       <SectionCard title="Disabled State" subtitle="Greyed-out, non-interactive image.">
+      <div className="space-y-4">
         <LabeledField label="Disabled">
           <Select value={state.disabled ? "true" : "false"} onChange={(v) => setKey("disabled")(v === "true")} options={[{ value: "false", label: "No" }, { value: "true", label: "Yes" }]} />
         </LabeledField>
         <LabeledField label="Disabled Opacity">
           <Input type="number" value={String(state.disabledOpacity)} onChange={(e) => setKey("disabledOpacity")(Number(e.target.value) || 0.5)} />
         </LabeledField>
-      </SectionCard>
+      </div>
+    </SectionCard>
 
       <SectionCard title="Fallback & Loading Placeholder" subtitle="Shown while loading or when the image fails.">
+      <div className="space-y-4">
         <ColorControl label="Fallback background (on error)" value={state.objectFitFallbackBg} onChange={setKey("objectFitFallbackBg")} />
         <LabeledField label="Loading placeholder">
           <SegmentedControl
@@ -95,7 +106,8 @@ export default function ImageStatesSection({ state, setState }: Props) {
           />
         </LabeledField>
         <ColorControl label="Placeholder color" value={state.loadingPlaceholderColor} onChange={setKey("loadingPlaceholderColor")} />
-      </SectionCard>
+      </div>
+    </SectionCard>
     </div>
   );
 }

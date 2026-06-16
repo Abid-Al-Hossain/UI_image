@@ -44,6 +44,7 @@ export default function ImageAnimationSection({
   return (
     <div className="space-y-6">
       <SectionCard title="Entrance" subtitle="How the image arrives into view.">
+      <div className="space-y-4">
         <LabeledField label="Type">
           <Select
             value={state.entranceAnimation}
@@ -79,9 +80,11 @@ export default function ImageAnimationSection({
             </LabeledField>
           </>
         ) : null}
-      </SectionCard>
+      </div>
+    </SectionCard>
 
       <SectionCard title="Hover" subtitle="Interactive motion on pointer hover.">
+      <div className="space-y-4">
         <LabeledField label="Effect">
           <Select
             value={state.hoverEffect}
@@ -164,7 +167,8 @@ export default function ImageAnimationSection({
             />
           </LabeledField>
         )}
-      </SectionCard>
+      </div>
+    </SectionCard>
     </div>
   );
 }

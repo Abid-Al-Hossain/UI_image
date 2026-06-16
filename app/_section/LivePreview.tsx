@@ -222,17 +222,18 @@ export default function LivePreview({ state }: LivePreviewProps) {
   const wrapperStyle: React.CSSProperties = {
     position: "relative",
     display: "inline-block",
+    width: widthValue,
+    height: heightValue,
+    aspectRatio: aspectRatioValue,
     cursor: state.disabled ? "not-allowed" : state.hoverEffect !== "none" || state.linkHref ? "pointer" : "default",
     outline: isFocused && state.focusRingEnabled && state.linkHref ? `${state.focusRingWidth}px solid ${state.focusRingColor}` : undefined,
     outlineOffset: isFocused && state.focusRingEnabled && state.linkHref ? state.focusRingOffset : undefined,
   };
   const Wrapper = (state.linkHref ? "a" : "div") as React.ElementType;
 
-  // Main image styles
+  // Main image styles. width/height/aspectRatio live on wrapperStyle instead,
+  // since the <Image fill> below cannot have its own width/height in style.
   const imageStyle: React.CSSProperties = {
-    width: widthValue,
-    height: heightValue,
-    aspectRatio: aspectRatioValue,
     objectFit: state.objectFit,
     objectPosition: `${state.objectPositionX}% ${state.objectPositionY}%`,
     filter: filterString,
