@@ -29,6 +29,7 @@ import ImageEffectsSection from "./_section/ImageEffectsSection";
 import ImageTypographySection from "./_section/ImageTypographySection";
 import ImageAnimationSection from "./_section/ImageAnimationSection";
 import ImageAccessibilitySection from "./_section/ImageAccessibilitySection";
+import ImageStatesSection from "./_section/ImageStatesSection";
 import ImagePresetsSection from "./_section/ImagePresetsSection";
 
 // Types & Utils
@@ -103,6 +104,7 @@ export default function ImagePlaygroundPage() {
     { id: "effects", label: "Effects", component: ImageEffectsSection },
     { id: "typography", label: "Typography", component: ImageTypographySection },
     { id: "animation", label: "Motion", component: ImageAnimationSection },
+    { id: "states", label: "States", component: ImageStatesSection },
     { id: "accessibility", label: "Accessibility" },
   ];
 

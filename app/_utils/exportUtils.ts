@@ -116,11 +116,13 @@ export function buildImageExportPayload(options: ExportOptions) {
     state.hoverEffect === "lift" ? -parseFloat(state.hoverLiftAmount) : 0;
   const hoverTilt =
     state.hoverEffect === "tilt" ? parseFloat(state.hoverTiltAmount) : 0;
-  const cursor = state.hoverEffect !== "none" ? "pointer" : "default";
+  const cursor = state.disabled ? "not-allowed" : state.hoverEffect !== "none" || state.linkHref ? "pointer" : "default";
   const transition =
     state.hoverEffect !== "none"
       ? `all ${state.hoverDuration}ms cubic-bezier(0.4, 0, 0.2, 1)`
-      : "none";
+      : state.transitionDuration > 0
+        ? `opacity ${state.transitionDuration}ms ${state.transitionEasing}`
+        : "none";
 
   // Duotone & Overlay Logics
   const duotoneFilter = state.duotoneEnabled ? "grayscale(100%)" : "";
@@ -151,10 +153,15 @@ export function buildImageExportPayload(options: ExportOptions) {
 
   // 2. Global CSS (HTML/React/Vue/CSS Vars)
   // ---------------------------------------------------------------------------
+  const focusRingCss = state.focusRingEnabled && state.linkHref
+    ? `.image-wrapper:focus-visible { outline: ${state.focusRingWidth}px solid ${state.focusRingColor}; outline-offset: ${state.focusRingOffset}px; }`
+    : "";
   const globalCss = `
     .image-container { position: relative; display: inline-block; perspective: ${state.perspective !== "0" ? state.perspective + "px" : "none"}; width: ${widthVal}; height: ${heightVal}; }
-    .image-wrapper { position: relative; display: inline-block; width: 100%; height: 100%; cursor: ${cursor}; overflow: hidden; border-radius: ${borderRadius}; clip-path: ${clipPath}; box-shadow: ${boxShadow}; border: ${state.borderWidth !== "0" ? `${state.borderWidth}px ${state.borderStyle} ${state.borderColor}` : "none"}; }
-    .main-image { display: block; width: 100%; height: 100%; object-fit: ${state.objectFit}; object-position: ${state.objectPositionX}% ${state.objectPositionY}%; aspect-ratio: ${aspectRatio}; transform-origin: ${state.transformOrigin}; transform: ${baseTransform}; filter: ${finalFilter}; mask-image: ${maskImage !== "none" ? maskImage : "none"}; -webkit-mask-image: ${maskImage !== "none" ? maskImage : "none"}; mix-blend-mode: ${state.mixBlendMode}; transition: ${transition}; 
+    .image-wrapper { position: relative; display: inline-block; width: 100%; height: 100%; cursor: ${cursor}; overflow: hidden; border-radius: ${borderRadius}; clip-path: ${clipPath}; box-shadow: ${boxShadow}; border: ${state.borderWidth !== "0" ? `${state.borderWidth}px ${state.borderStyle} ${state.borderColor}` : "none"}; background-color: ${state.objectFitFallbackBg}; opacity: ${state.disabled ? state.disabledOpacity : 1}; pointer-events: ${state.disabled ? "none" : "auto"}; }
+    ${focusRingCss}
+    .image-placeholder { position: absolute; inset: 0; border-radius: ${borderRadius}; background: ${state.loadingPlaceholder === "skeleton" ? `linear-gradient(90deg, ${state.loadingPlaceholderColor}, color-mix(in oklab, ${state.loadingPlaceholderColor} 60%, white), ${state.loadingPlaceholderColor})` : state.loadingPlaceholderColor}; filter: ${state.loadingPlaceholder === "blur" ? "blur(12px)" : "none"}; }
+    .main-image { display: block; width: 100%; height: 100%; object-fit: ${state.objectFit}; object-position: ${state.objectPositionX}% ${state.objectPositionY}%; aspect-ratio: ${aspectRatio}; transform-origin: ${state.transformOrigin}; transform: ${baseTransform}; filter: ${finalFilter}; mask-image: ${maskImage !== "none" ? maskImage : "none"}; -webkit-mask-image: ${maskImage !== "none" ? maskImage : "none"}; mix-blend-mode: ${state.mixBlendMode}; transition: ${transition};
       animation-name: ${state.entranceAnimation !== "none" ? `image-entrance-${state.entranceAnimation}` : "none"}; animation-duration: ${state.entranceDuration}ms; animation-delay: ${state.entranceDelay}ms; animation-fill-mode: both; animation-timing-function: cubic-bezier(0.16, 1, 0.3, 1); }
     .image-wrapper:hover .main-image {
        ${state.hoverEffect === "zoom-in" || state.hoverEffect === "zoom-out" ? `transform: ${baseTransform === "none" ? "" : baseTransform} scale(${hoverZoom});` : ""}
@@ -178,8 +185,13 @@ export function buildImageExportPayload(options: ExportOptions) {
   // 3. Generators
   // ---------------------------------------------------------------------------
 
-  const content = `import React from 'react';
-export default function StyledImage() { return (<><style>{\`${globalCss}\`}</style>${getJsxStructure(state, "image-container", "image-wrapper", "main-image")}</>); }`;
+  const content = `'use client';
+import React from 'react';
+export default function StyledImage() {
+  const [hasLoaded, setHasLoaded] = React.useState(false);
+  const [hasError, setHasError] = React.useState(false);
+  return (<><style>{\`${globalCss}\`}</style>${getJsxStructure(state, "image-container", "image-wrapper", "main-image")}</>);
+}`;
   return { content, filename: `${downloadName}.tsx` };
 }
 
@@ -187,10 +199,24 @@ export default function StyledImage() { return (<><style>{\`${globalCss}\`}</sty
 function getJsxStructure(state: ImageState, cont: string, wrap: string, img: string) {
   const roleAttr = state.ariaRole === "none" ? "" : ` role="${state.ariaRole}"`;
   const ariaHiddenAttr = state.ariaHidden ? " aria-hidden={true}" : "";
-  return `<div className="${cont}"><div className="${wrap}"><img src="${state.src}" alt="${state.ariaHidden ? "" : state.alt}"${roleAttr}${ariaHiddenAttr} loading="${state.loading}" decoding="${state.decoding}" className="${img}" />
+  const ariaLabelAttr = !state.ariaHidden && state.ariaLabel ? ` aria-label="${state.ariaLabel}"` : "";
+  const ariaDescribedByAttr = state.ariaDescribedBy ? ` aria-describedby="${state.ariaDescribedBy}"` : "";
+  const wrapTag = state.linkHref ? "a" : "div";
+  const wrapAttrs = state.linkHref
+    ? ` href="${state.linkHref}" target="${state.linkTarget}" rel="${state.linkRel}" tabIndex={${state.disabled ? -1 : 0}}`
+    : "";
+  return `<div className="${cont}"><${wrapTag} className="${wrap}"${wrapAttrs}>
+    {hasError ? (
+      <div${roleAttr}${ariaLabelAttr}${ariaDescribedByAttr}${ariaHiddenAttr} style={{ width: "100%", height: "100%" }} />
+    ) : (
+      <>
+        {${state.loadingPlaceholder !== "none"} && !hasLoaded ? <div className="image-placeholder" aria-hidden="true" /> : null}
+        <img src="${state.src}" alt="${state.ariaHidden ? "" : state.alt}"${roleAttr}${ariaLabelAttr}${ariaDescribedByAttr}${ariaHiddenAttr} loading="${state.loading}" decoding="${state.decoding}" className="${img}" onLoad={() => setHasLoaded(true)} onError={() => setHasError(true)} />
+      </>
+    )}
     ${state.duotoneEnabled ? `<div className="duotone-shadows" /><div className="duotone-highlights" />` : ""}
     ${state.overlayEnabled ? `<div className="color-overlay" />` : ""}
     ${state.vignetteEnabled && state.maskType === "none" ? `<div className="vignette-overlay" />` : ""}
     ${state.captionEnabled ? `<div className="image-caption-container"><div className="image-caption-text">${state.captionText}</div></div>` : ""}
-  </div></div>`;
+  </${wrapTag}></div>`;
 }

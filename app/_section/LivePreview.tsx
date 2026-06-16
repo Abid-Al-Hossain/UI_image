@@ -10,6 +10,9 @@ interface LivePreviewProps {
 
 export default function LivePreview({ state }: LivePreviewProps) {
   const [isHovered, setIsHovered] = React.useState(false);
+  const [isFocused, setIsFocused] = React.useState(false);
+  const [hasError, setHasError] = React.useState(false);
+  const [hasLoaded, setHasLoaded] = React.useState(false);
 
   // Build filter string
   const filterString = useMemo(() => {
@@ -219,8 +222,11 @@ export default function LivePreview({ state }: LivePreviewProps) {
   const wrapperStyle: React.CSSProperties = {
     position: "relative",
     display: "inline-block",
-    cursor: state.hoverEffect !== "none" ? "pointer" : "default",
+    cursor: state.disabled ? "not-allowed" : state.hoverEffect !== "none" || state.linkHref ? "pointer" : "default",
+    outline: isFocused && state.focusRingEnabled && state.linkHref ? `${state.focusRingWidth}px solid ${state.focusRingColor}` : undefined,
+    outlineOffset: isFocused && state.focusRingEnabled && state.linkHref ? state.focusRingOffset : undefined,
   };
+  const Wrapper = (state.linkHref ? "a" : "div") as React.ElementType;
 
   // Main image styles
   const imageStyle: React.CSSProperties = {
@@ -245,7 +251,11 @@ export default function LivePreview({ state }: LivePreviewProps) {
     transition:
       state.hoverEffect !== "none"
         ? `all ${state.hoverDuration}ms cubic-bezier(0.4, 0, 0.2, 1)`
-        : undefined,
+        : state.transitionDuration > 0
+          ? `opacity ${state.transitionDuration}ms ${state.transitionEasing}`
+          : undefined,
+    opacity: state.disabled ? state.disabledOpacity : hasLoaded || state.loadingPlaceholder === "none" ? 1 : 0,
+    pointerEvents: state.disabled ? "none" : undefined,
   };
 
   // Overlay styles
@@ -390,23 +400,65 @@ export default function LivePreview({ state }: LivePreviewProps) {
         @keyframes image-entrance-blur-in { from { opacity: 0; filter: blur(10px); } to { opacity: 1; filter: blur(0); } }
       `}</style>
 
-      <div
+      <Wrapper
+        {...(state.linkHref
+          ? { href: state.linkHref, target: state.linkTarget, rel: state.linkRel, tabIndex: state.disabled ? -1 : 0 }
+          : {})}
         style={wrapperStyle}
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
+        onFocus={() => setIsFocused(true)}
+        onBlur={() => setIsFocused(false)}
       >
-        <Image
-          src={state.src}
-          alt={state.alt}
-          role={imageRole}
-          aria-hidden={state.ariaHidden || undefined}
-          decoding={state.decoding}
-          fill
-          unoptimized
-          sizes={widthValue}
-          style={finalImageStyle}
-          className="image-preview"
-        />
+        {hasError ? (
+          <div
+            role={imageRole}
+            aria-label={state.ariaHidden ? undefined : state.ariaLabel || state.alt}
+            aria-describedby={state.ariaDescribedBy || undefined}
+            aria-hidden={state.ariaHidden || undefined}
+            style={{
+              width: widthValue,
+              height: heightValue,
+              aspectRatio: aspectRatioValue,
+              borderRadius,
+              background: state.objectFitFallbackBg,
+            }}
+          />
+        ) : (
+          <>
+            {state.loadingPlaceholder !== "none" && !hasLoaded && (
+              <div
+                aria-hidden="true"
+                style={{
+                  position: "absolute",
+                  inset: 0,
+                  borderRadius,
+                  background:
+                    state.loadingPlaceholder === "skeleton"
+                      ? `linear-gradient(90deg, ${state.loadingPlaceholderColor}, color-mix(in oklab, ${state.loadingPlaceholderColor} 60%, white), ${state.loadingPlaceholderColor})`
+                      : state.loadingPlaceholderColor,
+                  filter: state.loadingPlaceholder === "blur" ? "blur(12px)" : undefined,
+                }}
+              />
+            )}
+            <Image
+              src={state.src}
+              alt={state.alt}
+              role={imageRole}
+              aria-label={state.ariaHidden ? undefined : state.ariaLabel || undefined}
+              aria-describedby={state.ariaDescribedBy || undefined}
+              aria-hidden={state.ariaHidden || undefined}
+              decoding={state.decoding}
+              fill
+              unoptimized
+              sizes={widthValue}
+              style={finalImageStyle}
+              className="image-preview"
+              onLoad={() => setHasLoaded(true)}
+              onError={() => setHasError(true)}
+            />
+          </>
+        )}
 
         {/* Duotone Layers */}
         {duotoneStyles && (
@@ -448,7 +500,7 @@ export default function LivePreview({ state }: LivePreviewProps) {
             <div style={captionTextStyle}>{state.captionText}</div>
           </div>
         )}
-      </div>
+      </Wrapper>
     </div>
   );
 }
