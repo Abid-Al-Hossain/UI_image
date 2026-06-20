@@ -1,12 +1,12 @@
 "use client";
 
 import React, {
-import ContrastGuard from "@/components/shared/color/ContrastGuard";
   useState,
   useRef,
   useMemo,
   useDeferredValue,
 } from "react";
+import ContrastGuard from "@/components/shared/color/ContrastGuard";
 import AppShell from "@/components/shared/layout/AppShell";
 import useHydrated from "@/components/hooks/useHydrated";
 import { useHistoryState } from "@/components/hooks/useHistoryState";
