@@ -56,7 +56,7 @@ function TransformSlider({
         max={max}
         step={step}
         value={value}
-        onChange={onChange}
+        onChange={(nextValue) => onChange(String(nextValue))}
       />
     </LabeledField>
   );

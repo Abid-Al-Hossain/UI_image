@@ -26,10 +26,10 @@ export default function ImageStatesSection({ state, setState }: Props) {
       <SectionCard title="Accessibility Labels" subtitle="Explicit ARIA beyond role/aria-hidden.">
       <div className="space-y-4">
         <LabeledField label="Aria Label">
-          <Input value={state.ariaLabel} onChange={(e) => setKey("ariaLabel")(e.target.value)} placeholder="Describe the image purpose" />
+          <Input value={state.ariaLabel} onChange={(e) => setKey("ariaLabel")(e)} placeholder="Describe the image purpose" />
         </LabeledField>
         <LabeledField label="Aria Described By">
-          <Input value={state.ariaDescribedBy} onChange={(e) => setKey("ariaDescribedBy")(e.target.value)} placeholder="element-id" />
+          <Input value={state.ariaDescribedBy} onChange={(e) => setKey("ariaDescribedBy")(e)} placeholder="element-id" />
         </LabeledField>
       </div>
     </SectionCard>
@@ -37,7 +37,7 @@ export default function ImageStatesSection({ state, setState }: Props) {
       <SectionCard title="Link" subtitle="Make the image a clickable link.">
       <div className="space-y-4">
         <LabeledField label="Href">
-          <Input value={state.linkHref} onChange={(e) => setKey("linkHref")(e.target.value)} placeholder="https://example.com" />
+          <Input value={state.linkHref} onChange={(e) => setKey("linkHref")(e)} placeholder="https://example.com" />
         </LabeledField>
         <LabeledField label="Target">
           <SegmentedControl
@@ -47,7 +47,7 @@ export default function ImageStatesSection({ state, setState }: Props) {
           />
         </LabeledField>
         <LabeledField label="Rel">
-          <Input value={state.linkRel} onChange={(e) => setKey("linkRel")(e.target.value)} placeholder="noopener noreferrer" />
+          <Input value={state.linkRel} onChange={(e) => setKey("linkRel")(e)} placeholder="noopener noreferrer" />
         </LabeledField>
       </div>
     </SectionCard>
@@ -64,7 +64,7 @@ export default function ImageStatesSection({ state, setState }: Props) {
       <SectionCard title="Transitions" subtitle="Used for disabled/opacity changes when no hover effect is active.">
       <div className="space-y-4">
         <LabeledField label="Duration (ms)">
-          <Input type="number" value={String(state.transitionDuration)} onChange={(e) => setKey("transitionDuration")(Number(e.target.value) || 0)} />
+          <Input type="number" value={String(state.transitionDuration)} onChange={(e) => setKey("transitionDuration")(Number(e) || 0)} />
         </LabeledField>
         <SegmentedControl
           value={state.transitionEasing}
@@ -86,7 +86,7 @@ export default function ImageStatesSection({ state, setState }: Props) {
           <Select value={state.disabled ? "true" : "false"} onChange={(v) => setKey("disabled")(v === "true")} options={[{ value: "false", label: "No" }, { value: "true", label: "Yes" }]} />
         </LabeledField>
         <LabeledField label="Disabled Opacity">
-          <Input type="number" value={String(state.disabledOpacity)} onChange={(e) => setKey("disabledOpacity")(Number(e.target.value) || 0.5)} />
+          <Input type="number" value={String(state.disabledOpacity)} onChange={(e) => setKey("disabledOpacity")(Number(e) || 0.5)} />
         </LabeledField>
       </div>
     </SectionCard>

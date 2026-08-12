@@ -32,7 +32,7 @@ export default function ImageMetadataSection({
           <LabeledField label="Alt Text" hint="Describe the meaningful content.">
             <Input
               value={state.alt}
-              onChange={(event) => setKey("alt")(event.target.value)}
+              onChange={(event) => setKey("alt")(event)}
               placeholder="Describe the image..."
             />
           </LabeledField>

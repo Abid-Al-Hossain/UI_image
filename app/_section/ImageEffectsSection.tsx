@@ -87,7 +87,7 @@ export default function ImageEffectsSection({
                 max={100}
                 step={1}
                 value={state.overlayOpacity}
-                onChange={setKey("overlayOpacity")}
+                onChange={(value) => setKey("overlayOpacity")(String(value))}
               />
             </LabeledField>
 
@@ -135,7 +135,7 @@ export default function ImageEffectsSection({
                 max={100}
                 step={1}
                 value={state.vignetteIntensity}
-                onChange={setKey("vignetteIntensity")}
+                onChange={(value) => setKey("vignetteIntensity")(String(value))}
               />
             </LabeledField>
 
@@ -145,7 +145,7 @@ export default function ImageEffectsSection({
                 max={100}
                 step={1}
                 value={state.vignetteSoftness}
-                onChange={setKey("vignetteSoftness")}
+                onChange={(value) => setKey("vignetteSoftness")(String(value))}
               />
             </LabeledField>
 

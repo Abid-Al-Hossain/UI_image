@@ -53,7 +53,7 @@ export default function ImageMaskingSection({
               max={360}
               step={1}
               value={state.maskAngle}
-              onChange={setKey("maskAngle")}
+              onChange={(value) => setKey("maskAngle")(String(value))}
             />
           </LabeledField>
 
@@ -66,7 +66,7 @@ export default function ImageMaskingSection({
               max={100}
               step={1}
               value={state.maskStartOpacity}
-              onChange={setKey("maskStartOpacity")}
+              onChange={(value) => setKey("maskStartOpacity")(String(value))}
             />
           </LabeledField>
 
@@ -76,7 +76,7 @@ export default function ImageMaskingSection({
               max={100}
               step={1}
               value={state.maskEndOpacity}
-              onChange={setKey("maskEndOpacity")}
+              onChange={(value) => setKey("maskEndOpacity")(String(value))}
             />
           </LabeledField>
         </div>
@@ -101,7 +101,7 @@ export default function ImageMaskingSection({
               max={100}
               step={1}
               value={state.maskStartOpacity}
-              onChange={setKey("maskStartOpacity")}
+              onChange={(value) => setKey("maskStartOpacity")(String(value))}
             />
           </LabeledField>
 
@@ -111,7 +111,7 @@ export default function ImageMaskingSection({
               max={100}
               step={1}
               value={state.maskEndOpacity}
-              onChange={setKey("maskEndOpacity")}
+              onChange={(value) => setKey("maskEndOpacity")(String(value))}
             />
           </LabeledField>
         </div>
@@ -142,7 +142,7 @@ export default function ImageMaskingSection({
                   max={100}
                   step={1}
                   value={state.vignetteIntensity}
-                  onChange={setKey("vignetteIntensity")}
+                  onChange={(value) => setKey("vignetteIntensity")(String(value))}
                 />
               </LabeledField>
 
@@ -155,7 +155,7 @@ export default function ImageMaskingSection({
                   max={100}
                   step={1}
                   value={state.vignetteSoftness}
-                  onChange={setKey("vignetteSoftness")}
+                  onChange={(value) => setKey("vignetteSoftness")(String(value))}
                 />
               </LabeledField>
 

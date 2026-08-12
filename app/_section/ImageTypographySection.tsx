@@ -42,7 +42,7 @@ export default function ImageTypographySection({
                 max={48}
                 step={1}
                 value={state.captionFontSize}
-                onChange={setKey("captionFontSize")}
+                onChange={(value) => setKey("captionFontSize")(String(value))}
               />
             </LabeledField>
           </div>

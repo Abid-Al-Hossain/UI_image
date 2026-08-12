@@ -195,14 +195,14 @@ export default function ImageCompositionSection({ state, setState }: Props) {
             <LabeledField label="X" hint={`${state.objectPositionX}%`}>
               <Input
                 value={state.objectPositionX}
-                onChange={(e) => setKey("objectPositionX")(e.target.value)}
+                onChange={(e) => setKey("objectPositionX")(e)}
                 placeholder="50"
               />
             </LabeledField>
             <LabeledField label="Y" hint={`${state.objectPositionY}%`}>
               <Input
                 value={state.objectPositionY}
-                onChange={(e) => setKey("objectPositionY")(e.target.value)}
+                onChange={(e) => setKey("objectPositionY")(e)}
                 placeholder="50"
               />
             </LabeledField>

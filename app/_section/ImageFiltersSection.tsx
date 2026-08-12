@@ -51,7 +51,13 @@ function FilterSlider({
         </span>
       }
     >
-      <Slider min={min} max={max} step={1} value={value} onChange={onChange} />
+      <Slider
+        min={min}
+        max={max}
+        step={1}
+        value={value}
+        onChange={(nextValue) => onChange(String(nextValue))}
+      />
     </LabeledField>
   );
 }
@@ -155,7 +161,7 @@ export default function ImageFiltersSection({
                     max={50}
                     step={1}
                     value={state.dropShadowX}
-                    onChange={setKey("dropShadowX")}
+                    onChange={(value) => setKey("dropShadowX")(String(value))}
                   />
                 </LabeledField>
                 <LabeledField label="Y Offset">
@@ -164,7 +170,7 @@ export default function ImageFiltersSection({
                     max={50}
                     step={1}
                     value={state.dropShadowY}
-                    onChange={setKey("dropShadowY")}
+                    onChange={(value) => setKey("dropShadowY")(String(value))}
                   />
                 </LabeledField>
               </div>

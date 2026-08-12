@@ -60,7 +60,7 @@ export default function ImageBasicsSection({
           </div>
           <Input
             value={state.src}
-            onChange={(e) => setKey("src")(e.target.value)}
+            onChange={(e) => setKey("src")(e)}
             placeholder="Or enter custom URL..."
           />
         </div>
@@ -71,7 +71,7 @@ export default function ImageBasicsSection({
           <div className="flex gap-2">
             <Input
               value={state.width}
-              onChange={(e) => setKey("width")(e.target.value)}
+              onChange={(e) => setKey("width")(e)}
               className="flex-1"
             />
             <div className="w-20">
@@ -94,7 +94,7 @@ export default function ImageBasicsSection({
           <div className="flex gap-2">
             <Input
               value={state.height}
-              onChange={(e) => setKey("height")(e.target.value)}
+              onChange={(e) => setKey("height")(e)}
               className="flex-1"
             />
             <div className="w-20">

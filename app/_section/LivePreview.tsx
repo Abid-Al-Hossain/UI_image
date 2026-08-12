@@ -449,6 +449,7 @@ export default function LivePreview({ state }: LivePreviewProps) {
               aria-label={state.ariaHidden ? undefined : state.ariaLabel || undefined}
               aria-describedby={state.ariaDescribedBy || undefined}
               aria-hidden={state.ariaHidden || undefined}
+              loading={state.loading}
               decoding={state.decoding}
               fill
               unoptimized

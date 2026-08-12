@@ -65,7 +65,7 @@ export default function ImageAnimationSection({
                 max={2000}
                 step={100}
                 value={state.entranceDuration}
-                onChange={setKey("entranceDuration")}
+                onChange={(value) => setKey("entranceDuration")(String(value))}
               />
             </LabeledField>
 
@@ -75,7 +75,7 @@ export default function ImageAnimationSection({
                 max={2000}
                 step={100}
                 value={state.entranceDelay}
-                onChange={setKey("entranceDelay")}
+                onChange={(value) => setKey("entranceDelay")(String(value))}
               />
             </LabeledField>
           </>
@@ -102,7 +102,7 @@ export default function ImageAnimationSection({
               max={1000}
               step={50}
               value={state.hoverDuration}
-              onChange={setKey("hoverDuration")}
+              onChange={(value) => setKey("hoverDuration")(String(value))}
             />
           </LabeledField>
         ) : null}
@@ -115,7 +115,7 @@ export default function ImageAnimationSection({
               max={3}
               step={0.1}
               value={state.hoverZoomScale}
-              onChange={setKey("hoverZoomScale")}
+              onChange={(value) => setKey("hoverZoomScale")(String(value))}
             />
           </LabeledField>
         )}
@@ -127,7 +127,7 @@ export default function ImageAnimationSection({
               max={360}
               step={5}
               value={state.hoverRotateAngle}
-              onChange={setKey("hoverRotateAngle")}
+              onChange={(value) => setKey("hoverRotateAngle")(String(value))}
             />
           </LabeledField>
         )}
@@ -139,7 +139,7 @@ export default function ImageAnimationSection({
               max={50}
               step={1}
               value={state.hoverLiftAmount}
-              onChange={setKey("hoverLiftAmount")}
+              onChange={(value) => setKey("hoverLiftAmount")(String(value))}
             />
           </LabeledField>
         )}
@@ -151,7 +151,7 @@ export default function ImageAnimationSection({
               max={45}
               step={1}
               value={state.hoverTiltAmount}
-              onChange={setKey("hoverTiltAmount")}
+              onChange={(value) => setKey("hoverTiltAmount")(String(value))}
             />
           </LabeledField>
         )}
@@ -163,7 +163,7 @@ export default function ImageAnimationSection({
               max={200}
               step={10}
               value={state.hoverIntensity}
-              onChange={setKey("hoverIntensity")}
+              onChange={(value) => setKey("hoverIntensity")(String(value))}
             />
           </LabeledField>
         )}

@@ -58,7 +58,7 @@ export default function ImageShapeSection({
               max={200}
               step={1}
               value={state.borderRadiusUniform}
-              onChange={setKey("borderRadiusUniform")}
+              onChange={(value) => setKey("borderRadiusUniform")(String(value))}
             />
           </LabeledField>
         ) : (
@@ -69,7 +69,7 @@ export default function ImageShapeSection({
                 max={200}
                 step={1}
                 value={state.borderRadiusTL}
-                onChange={setKey("borderRadiusTL")}
+                onChange={(value) => setKey("borderRadiusTL")(String(value))}
               />
             </LabeledField>
             <LabeledField label="Top Right" hint={`${state.borderRadiusTR}px`}>
@@ -78,7 +78,7 @@ export default function ImageShapeSection({
                 max={200}
                 step={1}
                 value={state.borderRadiusTR}
-                onChange={setKey("borderRadiusTR")}
+                onChange={(value) => setKey("borderRadiusTR")(String(value))}
               />
             </LabeledField>
             <LabeledField
@@ -90,7 +90,7 @@ export default function ImageShapeSection({
                 max={200}
                 step={1}
                 value={state.borderRadiusBL}
-                onChange={setKey("borderRadiusBL")}
+                onChange={(value) => setKey("borderRadiusBL")(String(value))}
               />
             </LabeledField>
             <LabeledField
@@ -102,7 +102,7 @@ export default function ImageShapeSection({
                 max={200}
                 step={1}
                 value={state.borderRadiusBR}
-                onChange={setKey("borderRadiusBR")}
+                onChange={(value) => setKey("borderRadiusBR")(String(value))}
               />
             </LabeledField>
           </div>
@@ -156,7 +156,7 @@ export default function ImageShapeSection({
             max={20}
             step={1}
             value={state.borderWidth}
-            onChange={setKey("borderWidth")}
+            onChange={(value) => setKey("borderWidth")(String(value))}
           />
         </LabeledField>
 
@@ -212,7 +212,7 @@ export default function ImageShapeSection({
                   max={50}
                   step={1}
                   value={state.boxShadowX}
-                  onChange={setKey("boxShadowX")}
+                  onChange={(value) => setKey("boxShadowX")(String(value))}
                 />
               </LabeledField>
               <LabeledField label="Y Offset">
@@ -221,7 +221,7 @@ export default function ImageShapeSection({
                   max={50}
                   step={1}
                   value={state.boxShadowY}
-                  onChange={setKey("boxShadowY")}
+                  onChange={(value) => setKey("boxShadowY")(String(value))}
                 />
               </LabeledField>
             </div>
@@ -232,7 +232,7 @@ export default function ImageShapeSection({
                 max={100}
                 step={1}
                 value={state.boxShadowBlur}
-                onChange={setKey("boxShadowBlur")}
+                onChange={(value) => setKey("boxShadowBlur")(String(value))}
               />
             </LabeledField>
 
@@ -242,7 +242,7 @@ export default function ImageShapeSection({
                 max={50}
                 step={1}
                 value={state.boxShadowSpread}
-                onChange={setKey("boxShadowSpread")}
+                onChange={(value) => setKey("boxShadowSpread")(String(value))}
               />
             </LabeledField>
 
